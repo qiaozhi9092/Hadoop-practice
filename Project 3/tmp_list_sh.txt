@@ -1,0 +1,19 @@
+###########################################
+###  Shell Scirpts for Count Tran Volume
+###  by Card Type
+###  Demo unix scripts function and loop
+###########################################
+
+function cnt {
+file=$1
+
+cat $file 
+
+ echo "================================================"
+  while read t;
+do
+  echo " value in tmplist: $t"
+done < $file
+}
+cnt tmcc0808
+

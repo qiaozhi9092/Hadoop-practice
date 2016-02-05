@@ -1,0 +1,16 @@
+###########################################
+###  Shell Scirpts for Count Tran Volume
+###  by ACCT  
+###  Demo unix scripts function and loop
+###########################################
+
+function cnt {
+file=$1
+
+ echo "================================================================="
+ echo "Account Num   Transaction Volume     Tran Amount   Average Amount"
+ echo "================================================================="
+  cat $file |awk -F, '{ if ($1!=lag) {n=1; totamt=$3} else {n=n+1; totamt=totamt+$3} print $1","n","totamt; lag=$1}' | sort -t, -k1,2 -r |sort -t, -k1,1 -u |awk -F, '{avg=$3/$2; print $1"\t\t        "$2"              $"$3"\t\t$"avg}'
+ echo "================================================================="
+}
+cnt transactions.txt

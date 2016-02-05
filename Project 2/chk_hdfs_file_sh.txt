@@ -1,0 +1,84 @@
+## RPT 1:  count total record
+
+echo "==========================================="
+echo " Total Number of Record in:"
+echo " Filename: /bigdata_train_2015/tran.txt    "
+echo "==========================================="
+
+hadoop fs -text /bigdata_train_2015/tran.txt |wc -l
+
+echo "==========================================="
+
+echo "  "
+echo "  "
+
+## RPT 2: check if ACCT has missing values
+
+echo "================================"
+echo "Checking missing ACCT value "
+echo "--------------------------------"
+echo "Total Num of ACCT value:"
+
+hadoop fs -text /bigdata_train_2015/tran.txt|cut -d, -f1|wc -l
+
+echo "--------------------------------"
+echo "Total Missing ACCT value:"
+
+hadoop fs -text /bigdata_train_2015/tran.txt|cut -d, -f1 | grep ' '|wc -l
+
+## RPT 3:  check if MCC has missing values
+
+echo "================================"
+echo "Checking missing MCC value "
+echo "--------------------------------"
+echo "Total Num of MCC value:"
+
+hadoop fs -text /bigdata_train_2015/tran.txt|cut -d, -f4 | wc -l
+
+echo "--------------------------------"
+echo "Total Missing MCC value:"
+
+hadoop fs -text /bigdata_train_2015/tran.txt|cut -d, -f4 | grep ' '|wc -l
+
+echo "================================"
+echo "  "
+echo "  "
+
+## RPT 4:  Check the number of unique account number
+
+echo "================================"
+echo "Number of Unique ACCT:"
+hadoop fs -text /bigdata_train_2015/tran.txt|cut -d, -f1 |sort -u|wc -l
+
+echo "  "
+echo "  "
+
+## RPT 5:  Check the number of unique Card Type
+
+echo "================================"
+echo "Number of Unique Card Type:"
+
+hadoop fs -text /bigdata_train_2015/tran.txt|cut -d, -f5|sort -u|wc -l
+
+echo "================================"
+
+echo "  "
+
+
+## RPT 6:  Check the Year and Month of Transactions
+
+echo "================================="
+echo "The Month of Listed Transactions:"
+echo "---------------------------------"
+
+hadoop fs -text /bigdata_train_2015/tran.txt|cut -d, -f2|cut -d'/' -f1|sort -u
+
+echo "---------------------------------"
+echo "The Year of Listed Transactions:"
+echo "---------------------------------"
+
+hadoop fs -text /bigdata_train_2015/tran.txt|cut -d, -f2|cut -d'/' -f3 |sort -u
+
+echo "================================="
+
+echo "  "

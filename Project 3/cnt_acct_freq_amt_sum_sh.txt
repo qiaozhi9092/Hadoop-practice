@@ -1,0 +1,25 @@
+###########################################
+###  Shell Scirpts for Count Tran Volume
+###  by ACCT  
+###  Demo unix scripts function and loop
+###########################################
+
+function cnt {
+file=$1
+
+cut -d, -f1 $file  | sort -u > acct.list
+
+ echo "================================================"
+ echo "Account Num   Transaction Volume     Tran Amount"
+ echo "================================================"
+  while read t ;
+do
+  cat $file |awk -F, '{ if ($1=="'$t'") {n=n+1; totamt=totamt+$3; print $1"\t\t        "n"              $"totamt}}' 
+#|tail -1
+
+done < acct.list
+ echo "================================================"
+}
+cnt transactions.txt
+
+rm acct.list

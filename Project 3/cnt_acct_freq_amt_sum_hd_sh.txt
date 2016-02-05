@@ -1,0 +1,24 @@
+###########################################
+###  Shell Scirpts for Count Tran Volume
+###  by ACCT  
+###  Demo unix scripts function and loop
+###########################################
+
+function cnt {
+
+hadoop fs -text /bigdata_train_2015/tran.txt | cut -d, -f1 | sort -u > acct.list
+
+ echo "================================================"
+ echo "Account Num   Transaction Volume     Tran Amount"
+ echo "================================================"
+  while read t ;
+do
+  hadoop fs -text /bigdata_train_2015/tran.txt |awk -F, '{ if ($1=="'$t'") {n=n+1; totamt=totamt+$3; print $1"\t\t        "n"              $"totamt}}' |tail -1
+
+done < acct.list
+ echo "================================================"
+}
+cnt 
+
+rm acct.list
+

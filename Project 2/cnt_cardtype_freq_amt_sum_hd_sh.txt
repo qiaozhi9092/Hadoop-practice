@@ -1,0 +1,23 @@
+###########################################
+###  Shell Scirpts for Count Tran Volume
+###  by Card Type
+###  Demo unix scripts function and loop
+###########################################
+
+function cnt {
+file=$1
+ echo "================================================"
+ echo "Card Type    Transaction Volume     Tran Amount"
+ echo "================================================"
+  for t in C D;
+do
+ if [ $t == 'C' ]; then
+  hadoop fs -text /bigdata_train_2015/tran.txt |awk -F, '{ if (substr($5,1,1)=="'$t'") {n=n+1; totamt=totamt+$3; ctp="Credit Card"; print ctp "          "n"              $"totamt}}'|tail -1
+ else
+  hadoop fs -text /bigdata_train_2015/tran.txt |awk -F, '{ if (substr($5,1,1)=="'$t'") {n=n+1; totamt=totamt+$3; ctp="Debit Card"; print ctp "            "n"               $"totamt}}'| tail -1
+ fi
+done
+ echo "================================================"
+}
+cnt transactions.txt
+
